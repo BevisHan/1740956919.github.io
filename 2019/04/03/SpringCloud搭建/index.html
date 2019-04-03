@@ -3,18 +3,19 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>斯芬克斯的闲记</title>
+  <title>SpringCloud搭建 | 斯芬克斯的闲记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="IT爱好者的成长记录">
-<meta property="og:type" content="website">
-<meta property="og:title" content="斯芬克斯的闲记">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="版本过高问题  JAXB API是java EE 的API，因此在java SE 9.0 中不再包含这个 Jar 包。java 9 中引入了模块的概念，默认情况下，Java SE中将不再包含java EE 的Jar包 。而在 java 6/7 / 8 时关于这个API 都是捆绑在一起的。12345注：gradle形式1. implementation &amp;apos;javax.activation:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud搭建">
+<meta property="og:url" content="http://yoursite.com/2019/04/03/SpringCloud搭建/index.html">
 <meta property="og:site_name" content="斯芬克斯的闲记">
-<meta property="og:description" content="IT爱好者的成长记录">
+<meta property="og:description" content="版本过高问题  JAXB API是java EE 的API，因此在java SE 9.0 中不再包含这个 Jar 包。java 9 中引入了模块的概念，默认情况下，Java SE中将不再包含java EE 的Jar包 。而在 java 6/7 / 8 时关于这个API 都是捆绑在一起的。12345注：gradle形式1. implementation &amp;apos;javax.activation:">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-03T03:58:21.478Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="斯芬克斯的闲记">
-<meta name="twitter:description" content="IT爱好者的成长记录">
+<meta name="twitter:title" content="SpringCloud搭建">
+<meta name="twitter:description" content="版本过高问题  JAXB API是java EE 的API，因此在java SE 9.0 中不再包含这个 Jar 包。java 9 中引入了模块的概念，默认情况下，Java SE中将不再包含java EE 的Jar包 。而在 java 6/7 / 8 时关于这个API 都是捆绑在一起的。12345注：gradle形式1. implementation &amp;apos;javax.activation:">
   
     <link rel="alternate" href="/atom.xml" title="斯芬克斯的闲记" type="application/atom+xml">
   
@@ -63,9 +64,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-SpringCloud搭建" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-SpringCloud搭建" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/03/SpringCloud搭建/" class="article-date">
   <time datetime="2019-04-03T03:57:30.000Z" itemprop="datePublished">2019-04-03</time>
@@ -78,8 +77,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/SpringCloud搭建/">SpringCloud搭建</a>
+    <h1 class="article-title" itemprop="name">
+      SpringCloud搭建
     </h1>
   
 
@@ -148,60 +147,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-初识hexo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/03/初识hexo/" class="article-date">
-  <time datetime="2019-04-03T02:02:30.000Z" itemprop="datePublished">2019-04-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/初识hexo/">初识Hexo</a>
-    </h1>
+    <a href="/2019/04/03/初识hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">初识Hexo</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h3><ul>
-<li><strong>$ hexo new [layout] <title></title></strong>  </li>
-</ul>
-<p>可以在命令中指定文章的布局（layout），默认为 post，可以通过修改 _config.yml 中的 default_layout 参数来指定默认布局。<br>Hexo 有三种默认布局：post、page 和 draft</p>
-<h3 id="引用块书写"><a href="#引用块书写" class="headerlink" title="引用块书写"></a>引用块书写</h3><p><strong><blockquote><p>引用书上句子，Twitter,网络上文章，代码块，Youtube视频或图片</p>
-<footer><strong>Hexo官网</strong><cite><a href="https://hexo.io/zh-cn/docs/tag-plugins#%E5%BC%95%E7%94%A8%E5%9D%97" target="_blank" rel="noopener">hexo.io/zh-cn/docs/tag-plugins#%E5%BC%95%E7%94%A8%E5%9D%97</a></cite></footer></blockquote></strong></p>
-<h3 id="一般命令"><a href="#一般命令" class="headerlink" title="一般命令"></a>一般命令</h3><ul>
-<li><strong>hexo s 开启服务器</strong></li>
-<li><strong>ctrl c 停止服务器</strong>  </li>
-<li><strong>hexo server -p +端口号 改变端口号</strong>  </li>
-<li><strong>hexo new post “博客名”</strong></li>
-<li><strong>使用编辑器编好文章，那么就可以使用命令：hexo d -g，生成以及部署</strong>  </li>
-<li><strong>部署成功后访问你的地址：http://用户名.github.io。那么将看到生成的文章</strong></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/03/初识hexo/" data-id="cju0olozo0001g0ww0sc8o5l3" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
 
 </section>
         
