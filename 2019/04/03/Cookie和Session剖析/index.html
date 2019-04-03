@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Cookie和Session剖析 | 斯芬克斯的闲记</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#######  author:SFKS session 和 cookie 的区别和联系，session的生命周期，多个服务部署时session管理 ？ 当访问jsp或servlet时，生成session,或者request.getSession()或（true)强制生成，只访问页面静态资源不会生成。  &amp;gt; 存在时间可设置，web.xml配置或tomcat /conf/web.xml中ses">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cookie和Session剖析">
+<meta property="og:url" content="http://yoursite.com/2019/04/03/Cookie和Session剖析/index.html">
+<meta property="og:site_name" content="斯芬克斯的闲记">
+<meta property="og:description" content="#######  author:SFKS session 和 cookie 的区别和联系，session的生命周期，多个服务部署时session管理 ？ 当访问jsp或servlet时，生成session,或者request.getSession()或（true)强制生成，只访问页面静态资源不会生成。  &amp;gt; 存在时间可设置，web.xml配置或tomcat /conf/web.xml中ses">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-03T09:11:07.029Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cookie和Session剖析">
+<meta name="twitter:description" content="#######  author:SFKS session 和 cookie 的区别和联系，session的生命周期，多个服务部署时session管理 ？ 当访问jsp或servlet时，生成session,或者request.getSession()或（true)强制生成，只访问页面静态资源不会生成。  &amp;gt; 存在时间可设置，web.xml配置或tomcat /conf/web.xml中ses">
+  
+    <link rel="alternate" href="/atom.xml" title="斯芬克斯的闲记" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">斯芬克斯的闲记</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">home</a>
+        
+          <a class="main-nav-link" href="/language/语言">language</a>
+        
+          <a class="main-nav-link" href="/framework/框架">framework</a>
+        
+          <a class="main-nav-link" href="/archives">archives</a>
+        
+          <a class="main-nav-link" href="/tags">tags</a>
+        
+          <a class="main-nav-link" href="/message">message</a>
+        
+          <a class="main-nav-link" href="/about">about</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Cookie和Session剖析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/03/Cookie和Session剖析/" class="article-date">
+  <time datetime="2019-04-03T08:58:45.000Z" itemprop="datePublished">2019-04-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/语言/">语言</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Cookie和Session剖析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#######  <strong><em>author:SFKS</em></strong></p>
+<h3 id="session-和-cookie-的区别和联系，session的生命周期，多个服务部署时session管理-？"><a href="#session-和-cookie-的区别和联系，session的生命周期，多个服务部署时session管理-？" class="headerlink" title="session 和 cookie 的区别和联系，session的生命周期，多个服务部署时session管理 ？"></a>session 和 cookie 的区别和联系，session的生命周期，多个服务部署时session管理 ？</h3><ul>
+<li><strong>当访问jsp或servlet时，生成session,或者request.getSession()或（true)强制生成，只访问页面静态资源不会生成。</strong>  <pre><code>&gt; 存在时间可设置，web.xml配置或tomcat /conf/web.xml中session-config配置或session. setMaxInactiveInterval() ,默认30分钟
+可人为销毁 HttpSession.invalidate()
+</code></pre></li>
+<li><strong>比较</strong>     <pre><code>&gt;  **1. 从存取方式上比较：**  
+ Cookie中只能保存ASCII字符串  Session中可以存取任何类型的数据 可以把Session看做是一个Java容器类。  
+   **2. 从隐私安全上比较：**   
+   Cookie存储在客户端浏览器中，对客户端是可见的，客户端的一些程序可能会窥探、复制甚至修改Cookie中的内容。而Session存储在服务器上，对客户端是透明的，不存在敏感信息泄露的危险。  
+   **3. 从有效期上比较：**   
+    设置Cookie的maxAge属性为一个很大很大的数字或者Integer.MAX_VALUE就可以了；由于Session依赖于名为JSESSIONID的Cookie，而Cookie JSESSIONID的maxAge默认为-1，只要关闭了浏览器该Session就会失效，因此Session不能实现信息永久有效的效果。使用URL地址重写也不能实现。并且如果设置Session的超时时间过长，服务器累计的Session就会越多，越容易导致内存溢出。  
+   **4. 从跨域名上比较：**  
+     cookie 可以domain属性设置  Session仅在他所在的域名内有效。
+   从对服务器的负担上比较: 不用多说。  
+  **5. 从浏览器支持上比较：**  
+   如果客户端浏览器不支持Cookie，需要使用Session以及URL地址重写。需要注意的是所有的用到Session程序的URL都要使用response.encodeURL(String URL)或者response.encodeRedirectURL(String URL)进行URL地址重写，否则导致Session会话跟踪失败。对于WAP应用来说，Session+URL地址重写也许是它唯一的选择 。  
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2></li>
+<li>Cookie是早期的会话跟踪技术，它将信息保存到客户端浏览器中。浏览器访问网站时会携带这些Cookie信息，达到鉴别身份的目的。  </li>
+<li>Session是在Cookie基础上建立的会话跟踪技术，它将信息保存在服务器端，Session中能够存储负责的Java对象，因此使用更加方便。Session依赖于名为JSESSIONID的Cookie。  </li>
+<li>如果客户端浏览器不支持Cookie，或者禁用了Cookie，仍然可以通过使用URL地址重写来使用Session。<br>做了web集群后，通过负载均衡后，同一个IP访问同一个页面会被分配到不同的服务器上，如果session不同步的话，一个登录用户，一会是登录状态，一会又不是登录状态<br>多服务器部署管理 ：<a href="https://blog.csdn.net/networkangle/article/details/51627016" target="_blank" rel="noopener">https://blog.csdn.net/networkangle/article/details/51627016</a>  </li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/03/Cookie和Session剖析/" data-id="cju0zuawp0000nkww7s4nmoky" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/03/hash剖析比较-Java/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hash剖析比较-Java</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/语言/">语言</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/03/Cookie和Session剖析/">Cookie和Session剖析</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/03/hash剖析比较-Java/">hash剖析比较-Java</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/03/Java重要原理图/">java重要原理图</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/03/Hexo备忘录/">Hexo备忘录</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/03/SpringCloud搭建过程/">SpringCloud搭建过程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 SFKS-皮蛋<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">home</a>
+  
+    <a href="/language/语言" class="mobile-nav-link">language</a>
+  
+    <a href="/framework/框架" class="mobile-nav-link">framework</a>
+  
+    <a href="/archives" class="mobile-nav-link">archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">tags</a>
+  
+    <a href="/message" class="mobile-nav-link">message</a>
+  
+    <a href="/about" class="mobile-nav-link">about</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
